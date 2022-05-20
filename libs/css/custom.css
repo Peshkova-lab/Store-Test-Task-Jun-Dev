@@ -1,0 +1,86 @@
+.left-margin {
+    margin: 0 .5em 0 0;
+}
+
+.right-button-margin {
+    margin: 1em ;
+    overflow: hidden;
+}
+
+/* modal */
+
+.modal-body {
+    padding: 20px 20px 0px 20px !important;
+    text-align: center !important;
+}
+
+.modal-footer {
+    text-align: center !important;
+}
+
+.card {
+    display: block;
+    width: 250px;
+    height: 340px;
+    border: 1px solid black;
+    margin: 65px;
+    float: left;
+    text-align: center;
+    padding: 20px;
+}
+
+.card .delete-checkbox {
+    background-color: red;
+    display: block;
+    position: inherit;
+    float: left;
+}
+
+.card .name {
+    font-size: 1.4em;
+    font-weight:  bold;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.card .price {
+    font-size: 1.3em;
+    margin: 30px 0px;
+}
+
+.card .add-to-cart {
+    font-size: 1.1em;
+    background: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.card .add-to-cart:hover {
+    background: #c0c0c0;
+}
+
+.card .add-to-cart:active {
+    background: red;
+}
+
+.goods-out {
+    margin-top: 10px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.goods-out div {
+    align-items: center;
+}
+
+.goods-out::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.cart img {
+    width: 48px;
+}
