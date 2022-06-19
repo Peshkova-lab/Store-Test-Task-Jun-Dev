@@ -2,11 +2,17 @@
 class Database {
 
     // укажите свои собственные учетные данные для базы данных 
+    //private $host = "localhost";
+   // private $db_name = "id18963566_productsdb";
+    //private $username = "id18963566_jun_dev_test_task";
+    //private $password = "xt#i<ULe^?qq+^8@";
+    
     private $host = "storeWork";
     private $db_name = "productsdb";
     private $username = "root";
     private $password = "root";
-    
+     
+
     public $conn;
 
     private $table_name = "products";

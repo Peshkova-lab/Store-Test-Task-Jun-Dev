@@ -25,26 +25,27 @@ function deleteMassProducts() {
 }
 
 function chooseType() {
+    $("#size").removeAttr("required");
+    $("#weight").removeAttr("required");
+    $("#height").removeAttr("required");
+    $("#width").removeAttr("required");
+    $("#length").removeAttr("required");
 
     var type = $('#typeId').val();
 
-    document.getElementById('size1').hidden = true;
-    document.getElementById('height1').hidden = true;
-    document.getElementById('width1').hidden = true;
-    document.getElementById('lenght1').hidden = true;
-    document.getElementById('weight1').hidden = true;
+   $(".specAttr").hide();
 
-    if (type == 1) {
-        document.getElementById('size1').hidden = false;
+   $("#"+type).show();
+
+    if (type === 'DVD') {
+        $("#size").attr('required', '');
+    } else if (type === 'Book') {
+        $("#weight").attr('required', '');
+    } else if (type === 'Furniture') {
+        $("#height").attr('required', '');
+        $("#length").attr('required', '');
+        $("#width").attr('required', '');
     }
-    if (type == 2) {
-        document.getElementById('weight1').hidden = false; 
-    }
-    if (type == 3) {
-        document.getElementById('height1').hidden = false;
-        document.getElementById('width1').hidden = false;
-        document.getElementById('lenght1').hidden = false;
-    }        
 }
 
 

@@ -51,7 +51,7 @@ require_once "layout_header.php";
   
             while ($row_type = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row_type);
-            echo "<option value='{$id}'>{$type}</option>";
+            echo "<option value='{$type}'>{$type}</option>";
             }
   
             echo "</select>";
@@ -60,24 +60,26 @@ require_once "layout_header.php";
         </tr>
 
 
-        <tr id="weight1" class="specAttr" hidden>
+        <tr id="Book" class="specAttr" hidden>
             <td> Weight (KG): </td>
             <td>
                 <input id="weight" placeholder="Weight" title="Please, provide weight" name="weight" class='form-control' type="text" />
             </td>
         </tr>
 
-        <tr id="size1" class="specAttr" hidden>
+        <tr id="DVD" class="specAttr" hidden>
             <td>Size (MB):</td>
             <td>
                 <input id="size" placeholder="Size" title="Please, provide size" name="size" class='form-control' type="text" oninvalid="this.setCustomValidity('Please enter this field')" />
             </td>
         </tr>
 
-        <tr id="height1" class="specAttr" hidden>
-            <td> Height (CM): </td>
+        <tr id="Furniture" class="specAttr" hidden>
+            <td> Height x Width x Lenght (CM): </td>
             <td>
                 <input id="height" placeholder="Height"  title="Please, provide height" name="height" class='form-control' type="text" />
+                <input id="width" placeholder="Width" title="Please, provide width" name="width"  class='form-control' type="text" />
+                <input id="lenght" placeholder="Lenght" title="Please, provide lenght" name="lenght" class='form-control' type="text" />
             </td>
         </tr>
 
@@ -98,6 +100,7 @@ require_once "layout_header.php";
             <td></td>
             <td><button type="submit" class="btn btn-primary">Save</button></td>
         </tr>
+        
   
     </table>
 </form>
@@ -107,15 +110,15 @@ require_once "layout_header.php";
 if ($_POST) {
 
     switch ($_POST['typeId']) {
-        case 1: 
+        case 'DVD': 
             $product = new Disc($db);
             $product->setSpecAttr($_POST['size'] . " MB");
             break;
-        case 2:
+        case 'Book':
             $product = new Book($db);
             $product->setSpecAttr($_POST['weight'] . " KG");
             break;
-        case 3:
+        case 'Furniture':
             $product = new Furniture($db);
             $dimension = $_POST['height'] . "x" . $_POST['width'] . "x" . $_POST['lenght'] . " CM";
             $product->setSpecAttr($dimension);
