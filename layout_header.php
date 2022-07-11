@@ -20,5 +20,5 @@
 
         <!-- show page header -->
         <div class="page-header">
-            <h1><?php echo $page_title; ?></h1>
+            <h1 class="cyber"><?php echo $page_title; ?></h1>
         </div>

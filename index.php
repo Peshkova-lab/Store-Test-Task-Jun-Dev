@@ -23,9 +23,9 @@ require_once "layout_header.php";
 
 <div class='right-button-margin'>
     
-    <button id = "delete-product-btn" class='btn btn-default pull-right'>MASS DELETE</button>
+    <button id = "delete-product-btn" class='btn btn-default pull-right cyber'>MASS DELETE</button>
 
-    <a href='add_product.php' class='btn btn-default pull-right'>ADD</a>
+    <a href='add_product.php' class='btn btn-default pull-right cyber'>ADD</a>
 
 </div>
 
@@ -38,7 +38,7 @@ if ($num > 0) {
             
             extract($row);
 
-            echo "<div class='card'>";
+            echo "<div class='card cyber'>";
             echo "<input type='checkbox' class='delete-checkbox' id='{$id}' value='{$name}'>";
             echo "<p class='sku'>{$sku}</p>";
             echo "<p class='name'>{$name}</p>";

@@ -16,7 +16,7 @@ require_once "layout_header.php";
 ?>
 
 <div class='right-button-margin'>
-    <a href='index.php' class='btn btn-default pull-right'>Cancel</a>
+    <a href='index.php' class='btn btn-default pull-right cyber'>Cancel</a>
 </div>
 
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
@@ -47,7 +47,7 @@ require_once "layout_header.php";
   
             // put them in the dropdown list
             echo "<select class='form-control' id='typeId' name='typeId' required >";
-            echo "<option>Choose type...</option>";
+           // echo "<option>Choose type...</option>";
   
             while ($row_type = $stmt->fetch(PDO::FETCH_ASSOC)) {
             extract($row_type);
@@ -60,7 +60,7 @@ require_once "layout_header.php";
         </tr>
 
 
-        <tr id="Book" class="specAttr" hidden>
+        <tr id="Book" class="specAttr">
             <td> Weight (KG): </td>
             <td>
                 <input id="weight" placeholder="Weight" title="Please, provide weight" name="weight" class='form-control' type="text" />
@@ -83,22 +83,9 @@ require_once "layout_header.php";
             </td>
         </tr>
 
-        <tr id="width1" class="specAttr" hidden>
-            <td> Width (CM): </td>
-            <td>
-                <input id="width" placeholder="Width" title="Please, provide width" name="width"  class='form-control' type="text" />
-            </td>
-        </tr>
-
-        <tr id="lenght1" class="specAttr" hidden>
-            <td> Lenght (CM):  </td>
-            <td>
-                <input id="lenght" placeholder="Lenght" title="Please, provide lenght" name="lenght" class='form-control' type="text" />
-            </td>
-        </tr>
         <tr>
             <td></td>
-            <td><button type="submit" class="btn btn-primary">Save</button></td>
+            <td><button type="submit" class="btn btn-primary cyber">Save</button></td>
         </tr>
         
   
