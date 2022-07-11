@@ -11,7 +11,6 @@ class Database {
     private $db_name = "productsdb";
     private $username = "root";
     private $password = "root";
-     
 
     public $conn;
 
@@ -44,6 +43,6 @@ class Database {
         $stmt->execute();
     
         return $stmt;
-}
+    }
 }
 ?>

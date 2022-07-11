@@ -35,7 +35,7 @@ require_once "layout_header.php";
   
         <tr>
             <td>Price</td>
-            <td><input type='text' id='price' placeholder="Price" title="Please, provide price" name='price' class='form-control' required /></td>
+            <td><input type="number" step="0.01" id='price' placeholder="Price" title="Please, provide price" name='price' class='form-control' required /></td>
         </tr>
   
         <tr>
@@ -59,27 +59,26 @@ require_once "layout_header.php";
             </td>
         </tr>
 
-
         <tr id="Book" class="specAttr">
             <td> Weight (KG): </td>
             <td>
-                <input id="weight" placeholder="Weight" title="Please, provide weight" name="weight" class='form-control' type="text" />
+                <input id="weight" placeholder="Weight" title="Please, provide weight" name="weight" class='form-control' type="number" step="0.01" />
             </td>
         </tr>
 
         <tr id="DVD" class="specAttr" hidden>
             <td>Size (MB):</td>
             <td>
-                <input id="size" placeholder="Size" title="Please, provide size" name="size" class='form-control' type="text" oninvalid="this.setCustomValidity('Please enter this field')" />
+                <input id="size" placeholder="Size" title="Please, provide size" name="size" class='form-control' type="number" oninvalid="this.setCustomValidity('Please enter this field')" />
             </td>
         </tr>
 
         <tr id="Furniture" class="specAttr" hidden>
             <td> Height x Width x Lenght (CM): </td>
             <td>
-                <input id="height" placeholder="Height"  title="Please, provide height" name="height" class='form-control' type="text" />
-                <input id="width" placeholder="Width" title="Please, provide width" name="width"  class='form-control' type="text" />
-                <input id="lenght" placeholder="Lenght" title="Please, provide lenght" name="lenght" class='form-control' type="text" />
+                <input id="height" placeholder="Height"  title="Please, provide height" name="height" class='form-control' type="number" step="0.05" />
+                <input id="width" placeholder="Width" title="Please, provide width" name="width"  class='form-control' type="number" step="0.05" />
+                <input id="lenght" placeholder="Lenght" title="Please, provide lenght" name="lenght" class='form-control' type="number" step="0.05" />
             </td>
         </tr>
 
@@ -96,33 +95,42 @@ require_once "layout_header.php";
 // if the form has been submitted
 if ($_POST) {
 
-    switch ($_POST['typeId']) {
-        case 'DVD': 
-            $product = new Disc($db);
-            $product->setSpecAttr($_POST['size'] . " MB");
-            break;
-        case 'Book':
-            $product = new Book($db);
-            $product->setSpecAttr($_POST['weight'] . " KG");
-            break;
-        case 'Furniture':
-            $product = new Furniture($db);
-            $dimension = $_POST['height'] . "x" . $_POST['width'] . "x" . $_POST['lenght'] . " CM";
-            $product->setSpecAttr($dimension);
-            break;
-    }
+    $product = new $_POST['typeId']($db);
 
     // set values ​​for product properties
+    $product->setSpecAttr($_POST['size'] . "." . $_POST['weight'] . "." . $_POST['height'] . "." . $_POST['width'] . "." . $_POST['lenght']);
     $product->setSKU($_POST['sku']);
     $product->setName($_POST['name']);
     $product->setPrice($_POST['price']);
     $product->setTypeId($_POST['typeId']);
-   
+
+    echo "('" . $product->getSKU() . "', '" . $product->getName() . "', '" . $product->getPrice() . "', " . $product->getTypeId() . ", '" . $product->getSpecAttr() . "')"; 
+    
+    $query = "INSERT INTO products
+    SET
+    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttr";
+
+$stmt = $db->prepare($query);
+
+$stmt->bindParam(":sku", $product->getSKU());
+$stmt->bindParam(":name", $product->getName());
+$stmt->bindParam(":price", $product->getPrice());
+$stmt->bindParam(":specAttr", $product->getSpecAttr());
+$stmt->bindParam(":typeId", $product->getTypeId());
+
+if ($stmt->execute()) {
+    ?>
+    <script type="text/javascript">
+        setTimeout('location.replace("/index.php")', 500);
+    </script>
+    <?php echo "<div class='alert alert-success'>Product create success!</div>";
+} else {
+    echo "<div class='alert alert-danger'>Product create failed.</div>";
+}
+
     // product creation
-    if ($product->create()) {
-        //header("Location: /index.php");
-        //exit;
-        //location.href(index.php);?>
+    /*if ($product->create()) {
+        ?>
         <script type="text/javascript">
             setTimeout('location.replace("/index.php")', 500);
         </script>
@@ -132,7 +140,7 @@ if ($_POST) {
     // if it is not possible to create a product, we will inform the user about it
     else {
         echo "<div class='alert alert-danger'>Product create failed.</div>";
-    }
+    }*/
 }
 ?>
 

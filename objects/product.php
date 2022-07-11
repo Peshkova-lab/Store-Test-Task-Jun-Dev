@@ -26,15 +26,29 @@ abstract class Product {
     function setPrice($price) {
         $this->price = $price;   
     }
-
-    function setTypeId($typeId) {
-        $this->typeId = $typeId;   
+    
+    function getSKU() {
+        return $this->sku;
     }
 
-    function setSpecAttr($specAttr) {
-        $this->specAttr = $specAttr;
+    function getName() {
+        return $this->name;
+    }
+    
+    function getPrice() {
+        return $this->price;
     }
 
+    function getTypeId() {
+        return $this->typeId;
+    }
+
+    function getSpecAttr() {
+        return $this->specAttr;
+    
+    }
+
+    abstract function setSpecAttr($specAttr);
     abstract function create();
 
     static function readAll($db) {
@@ -71,16 +85,6 @@ abstract class Product {
 
 class Book extends Product {
 
-    protected $weight;
-    
-    function setWeight($weight) {
-        $this->weight = $weight;
-    }
-
-    function getWeight() {
-        return $this->weight;
-    }
-
     private $conn;
     private $table_name = "products";
 
@@ -88,19 +92,25 @@ class Book extends Product {
         $this->conn = $db;
     }
 
+    function setTypeId() {
+        $this->typeId = 2;   
+    }
+
+    function setSpecAttr($specAttr) {
+        $attrs = explode(".", $specAttr);
+
+        $this->specAttr = $attrs[1] . " KG";
+    }
+
     function create() {
 
-        $this->setWeight($this->specAttr);
-
-        
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttribute";
+                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttr";
 
         $stmt = $this->conn->prepare($query);
 
-       
         $this->sku=htmlspecialchars(strip_tags($this->sku));
         $this->name=htmlspecialchars(strip_tags($this->name));
         $this->price=htmlspecialchars(strip_tags($this->price));
@@ -111,7 +121,7 @@ class Book extends Product {
         $stmt->bindParam(":sku", $this->sku);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":specAttribute", $this->weight);
+        $stmt->bindParam(":specAttr", $this->specAttr);
         $stmt->bindParam(":typeId", $this->typeId);
 
         if ($stmt->execute()) {
@@ -123,18 +133,8 @@ class Book extends Product {
     }
 }
 
-class Disc extends Product {
-
-    protected $size;
+class DVD extends Product {
     
-    function setSize($size) {
-        $this->size = $size;
-    }
-
-    function getSize() {
-        return $this->size;
-    }
-
     private $conn;
     private $table_name = "products";
 
@@ -142,14 +142,23 @@ class Disc extends Product {
         $this->conn = $db;
     }
 
-    function create() {
+    function setTypeId() {
+        $this->typeId = 1;   
+    }
 
-        $this->setSize($this->specAttr);
+    function setSpecAttr($specAttr) {
+
+        $attrs = explode(".", $specAttr);
+
+        $this->specAttr = $attrs[0] . " MB";
+    }
+
+    function create() {
 
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttribute";
+                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttr";
 
         $stmt = $this->conn->prepare($query);
 
@@ -157,13 +166,12 @@ class Disc extends Product {
         $this->name=htmlspecialchars(strip_tags($this->name));
         $this->price=htmlspecialchars(strip_tags($this->price));
         $this->specAttr=htmlspecialchars(strip_tags($this->specAttr));
-        $this->size = htmlspecialchars(strip_tags($this->size));
         $this->typeId=htmlspecialchars(strip_tags($this->typeId));
         
         $stmt->bindParam(":sku", $this->sku);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":specAttribute", $this->size);
+        $stmt->bindParam(":specAttr", $this->specAttr);
         $stmt->bindParam(":typeId", $this->typeId);
 
         if ($stmt->execute()) {
@@ -177,24 +185,6 @@ class Disc extends Product {
 
 class Furniture extends Product {
 
-    protected $height;
-    protected $width;
-    protected $lenght;
-
-    protected $dimensions;
-    
-    function setHeight($height) {
-        $this->height = $height;
-    }
-
-    function setWidth($width) {
-        $this->width = $width;
-    }
-
-    function setLenght($lenght) {
-        $this->lenght = $lenght;
-    }
-
     private $conn;
     private $table_name = "products";
 
@@ -202,12 +192,23 @@ class Furniture extends Product {
         $this->conn = $db;
     }
 
+    function setTypeId() {
+        $this->typeId = 3;   
+    }
+    
+    function setSpecAttr($specAttr) {
+        
+        $attrs = explode(".", $specAttr);
+
+        $this->specAttr = $attrs[2] . "x" . $attrs[3] . "x" . $attrs[4] . " CM";
+    }
+
     function create() {
         
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttribute";
+                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttr";
 
         $stmt = $this->conn->prepare($query);
 
@@ -220,7 +221,7 @@ class Furniture extends Product {
         $stmt->bindParam(":sku", $this->sku);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":specAttribute", $this->specAttr);
+        $stmt->bindParam(":specAttr", $this->specAttr);
         $stmt->bindParam(":typeId", $this->typeId);
 
         if ($stmt->execute()) {

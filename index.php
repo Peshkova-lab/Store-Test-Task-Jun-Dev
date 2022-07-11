@@ -37,6 +37,7 @@ if ($num > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             
             extract($row);
+            
 
             echo "<div class='card cyber'>";
             echo "<input type='checkbox' class='delete-checkbox' id='{$id}' value='{$name}'>";
