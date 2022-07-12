@@ -1,4 +1,5 @@
 <?php
+/*
 class Product {
 
     private $conn;
@@ -111,5 +112,5 @@ class Product {
         return false;
     }
 }
-}
+}*/
 ?>

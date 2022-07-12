@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 include_once 'config/database.php';
 include_once 'objects/product.php';
 include_once 'objects/type.php';
@@ -128,19 +130,6 @@ if ($stmt->execute()) {
     echo "<div class='alert alert-danger'>Product create failed.</div>";
 }
 
-    // product creation
-    /*if ($product->create()) {
-        ?>
-        <script type="text/javascript">
-            setTimeout('location.replace("/index.php")', 500);
-        </script>
-        <?php echo "<div class='alert alert-success'>Product create success!</div>";
-    }
-    
-    // if it is not possible to create a product, we will inform the user about it
-    else {
-        echo "<div class='alert alert-danger'>Product create failed.</div>";
-    }*/
 }
 ?>
 
