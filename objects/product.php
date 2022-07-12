@@ -11,6 +11,8 @@ abstract class Product {
     protected $typeId;
     protected $specAttr;
 
+    abstract function setSpecAttr($specAttr);
+
     function setId($id) {
         $this->id = $id;
     }
@@ -47,9 +49,6 @@ abstract class Product {
         return $this->specAttr;
     
     }
-
-    abstract function setSpecAttr($specAttr);
-    abstract function create();
 
     static function readAll($db) {
         self::$conn = $db;
@@ -101,36 +100,6 @@ class Book extends Product {
 
         $this->specAttr = $attrs[1] . " KG";
     }
-
-    function create() {
-
-        $query = "INSERT INTO
-                    " . $this->table_name . "
-                SET
-                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttr";
-
-        $stmt = $this->conn->prepare($query);
-
-        $this->sku=htmlspecialchars(strip_tags($this->sku));
-        $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->specAttr=htmlspecialchars(strip_tags($this->specAttr));
-        $this->typeId=htmlspecialchars(strip_tags($this->typeId));
-
-
-        $stmt->bindParam(":sku", $this->sku);
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":specAttr", $this->specAttr);
-        $stmt->bindParam(":typeId", $this->typeId);
-
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 }
 
 class DVD extends Product {
@@ -152,35 +121,6 @@ class DVD extends Product {
 
         $this->specAttr = $attrs[0] . " MB";
     }
-
-    function create() {
-
-        $query = "INSERT INTO
-                    " . $this->table_name . "
-                SET
-                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttr";
-
-        $stmt = $this->conn->prepare($query);
-
-        $this->sku=htmlspecialchars(strip_tags($this->sku));
-        $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->specAttr=htmlspecialchars(strip_tags($this->specAttr));
-        $this->typeId=htmlspecialchars(strip_tags($this->typeId));
-        
-        $stmt->bindParam(":sku", $this->sku);
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":specAttr", $this->specAttr);
-        $stmt->bindParam(":typeId", $this->typeId);
-
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 }
 
 class Furniture extends Product {
@@ -201,34 +141,6 @@ class Furniture extends Product {
         $attrs = explode(".", $specAttr);
 
         $this->specAttr = $attrs[2] . "x" . $attrs[3] . "x" . $attrs[4] . " CM";
-    }
-
-    function create() {
-        
-        $query = "INSERT INTO
-                    " . $this->table_name . "
-                SET
-                    sku=:sku, name=:name, price=:price,  typeId=:typeId, specAttr=:specAttr";
-
-        $stmt = $this->conn->prepare($query);
-
-        $this->sku=htmlspecialchars(strip_tags($this->sku));
-        $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->specAttr=htmlspecialchars(strip_tags($this->specAttr));
-        $this->typeId=htmlspecialchars(strip_tags($this->typeId));
-
-        $stmt->bindParam(":sku", $this->sku);
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":specAttr", $this->specAttr);
-        $stmt->bindParam(":typeId", $this->typeId);
-
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
 ?>

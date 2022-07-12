@@ -10,7 +10,7 @@ function deleteMassProducts() {
         }
      }
 
-    console.log(deleteProducts);
+    //console.log(deleteProducts);
 
     $.post (
         "../../delete_product.php",

@@ -35,10 +35,9 @@ require_once "layout_header.php";
 if ($num > 0) {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            
+        
             extract($row);
-            
-
+        
             echo "<div class='card cyber'>";
             echo "<input type='checkbox' class='delete-checkbox' id='{$id}' value='{$name}'>";
             echo "<p class='sku'>{$sku}</p>";
@@ -52,7 +51,7 @@ if ($num > 0) {
     }
 // inform the user that there are no products
 else {
-    echo "<div class='alert alert-info'>Товары не найдены.</div>";
+    echo "<div class='alert alert-info'>Products not found.</div>";
 }
 ?>
 
